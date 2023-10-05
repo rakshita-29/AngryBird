@@ -1,0 +1,37 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  
+}
+
+body{
+    background: url('../images/bg1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.btn{
+    font-family: 'Knewave', cursive;
+    margin: 10px;
+    font-size: 3.8rem;
+    background-color: black;
+    border: 4px solid black;
+    border-radius: 38px;
+    background: url('../images/wooden_bg.webp');
+    position: absolute;
+    bottom: 12%;
+    left: 43%;
+    transition: all 0.3s ease-in-out;
+
+ 
+}
+.btn a{
+    text-decoration: none;
+    color: white;
+    margin: 25px 30px;
+    -webkit-text-stroke: 3.5px black;
+}
+.btn:active{
+    transform: scale(0.93);
+}

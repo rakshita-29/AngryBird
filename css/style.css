@@ -5,33 +5,67 @@
   
 }
 
-body{
-    background: url('../images/bg1.jpg');
+html, body {
+    height: 100%;
+}
+
+.container {
+    background: url('../images/bg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
 }
 
 .btn{
     font-family: 'Knewave', cursive;
     margin: 10px;
     font-size: 3.8rem;
-    background-color: black;
     border: 4px solid black;
-    border-radius: 38px;
+    border-radius: 45px;
     background: url('../images/wooden_bg.webp');
     position: absolute;
     bottom: 12%;
     left: 43%;
-    transition: all 0.3s ease-in-out;
-
- 
-}
-.btn a{
-    text-decoration: none;
     color: white;
-    margin: 25px 30px;
+    padding: 4px 30px;
     -webkit-text-stroke: 3.5px black;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
 }
+
 .btn:active{
     transform: scale(0.93);
 }
+#birds{
+    position: absolute;
+    top: 20%;
+    left: 32%;
+}
+#title{
+    position: absolute;
+    top: 0;
+    left: 23%;
+}
+#badpig1{
+    position: absolute;
+    top: 23%;
+    left: 15%;
+    width: 8rem;
+    rotate: -55deg;
+}
+#badpig2{
+    width: 10rem;
+    rotate: 120deg;
+    position: absolute;
+    top: 63%;
+    left: 65%;
+}
+#badpig3{
+    width: 8rem;
+    rotate: -130deg;
+    position: absolute;
+    top: 75%;
+    left: 18%;
+}
+

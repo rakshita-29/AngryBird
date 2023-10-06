@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.level_container{
+    background: url('../images/lvl_page_bg.jpg');
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#lvl_page_badpig{
+    position: absolute;
+    top: 63%;
+    left: 65%;
+    width: 24rem;
+}
+#lvl_page_birds{
+    position: absolute;
+    top: 63%;
+    left: 10%;
+    width: 27rem;
+}

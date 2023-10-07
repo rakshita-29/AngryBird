@@ -14,4 +14,4 @@ function init(){
     document.querySelector(".container").style.display = "none";
     canvas.style.display = "block";
 }
-document.querySelector(".btn").addEventListener("click",init)
+document.getElementById("start_btn").addEventListener("click",init)

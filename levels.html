@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bruno+Ace&family=Cardo&family=Concert+One&family=Dosis:wght@300&family=Josefin+Sans&family=Knewave&family=Poppins:wght@100;300;800&family=Quicksand:wght@500&family=Tangerine&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="https://fontawesome.com/icons/chevron-left?f=classic&s=solid&pc=%23ffffff">
+
+    <title>Angry Birds - Level Selection</title>
+    <link rel="stylesheet" href="./css/levels.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div id="custom-cursor"></div>
+    <button class="btn" id="sound_btn"><span class="material-symbols-outlined" id="volume-span">
+      volume_off
+      </span></button>
+      <button class="btn" id="backbutton"><i class="fa-solid fa-chevron-left"></i></button>
+    <div class="level_container">
+      <div class="lvl_images">
+        <img
+          src="./images/angrybird.png"
+          class="floating-element"
+          alt=""
+          id="title"
+        />
+        <img src="./images/lvl_page_birds.png" alt="" id="lvl_page_birds" />
+        <img src="./images/lvl_pag_pigs.png" alt="" id="lvl_page_badpig" />
+      </div>
+  
+
+      <div class="lvl_selection">
+        <h1 class="h-primary">Select Level</h1>
+        <div class="lvl">
+        <div id="lvl1">
+          <button class="btn h-primary" id="lvl1">1</button>
+          <span class="stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i></span>
+          </div>
+        <div id="lvl2">
+          <button class="btn h-primary" id="lvl2">2</button>
+          <span class="stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i></span>
+          </div>
+      </div></div>
+
+
+
+    <script src="./js/script.js"></script>
+    <script src="./js/home.js"></script>
+  </body>
+</html>

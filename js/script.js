@@ -45,6 +45,7 @@ function backButton() {
   if (page == 1) {
     document.querySelector(".level_container").style.display = "none";
     document.querySelector(".container").style.display = "block";
+    document.getElementById("backbutton").style.display = 'none';
     document.body.style.background = "url('images/bg.jpg')";
     page = 0;
   }

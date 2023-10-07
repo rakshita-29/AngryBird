@@ -10,8 +10,3 @@ backgroundImage.onload = function () {
 
     
 };
-function init(){
-    document.querySelector(".container").style.display = "none";
-    canvas.style.display = "block";
-}
-document.getElementById("start_btn").addEventListener("click",init)

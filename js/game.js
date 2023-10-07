@@ -7,6 +7,7 @@ const slingShotHeight = 180;
 var isSlingShotActive = false;
 let selectedBird = null;
 let isDragging = false;
+let birdToShoot = null;
 
 class Bird {
     constructor(imagePath, width, height, x) {
@@ -55,8 +56,8 @@ class slingShot {
         this.width = 100;
         this.height = 180;
         this.position = {
-            x:150,
-            y:ground-this.height,
+            x: 150,
+            y: ground - this.height,
         }
         this.image.onload = () => {
             this.draw();
@@ -65,7 +66,7 @@ class slingShot {
     draw() {
         ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
-    update(){
+    update() {
         // this.position = {
         //     x:150,
         //     y:ground-this.height,
@@ -82,7 +83,7 @@ function main() {
     for (const bird of birds) {
         bird.update();
     }
-    slingShotVar.draw();
+    slingShotVar.draw()
     requestAnimationFrame(main);
 }
 function handleClick(event) {
@@ -117,7 +118,42 @@ backgroundImage.onload = function () {
     main();
 };
 
+function handleMouseDown(event) {
+    const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+    const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+    if (selectedBird != null) {
+        if (
+            mouseX >= selectedBird.position.x &&
+            mouseX <= selectedBird.position.x + selectedBird.width &&
+            mouseY >= selectedBird.position.y &&
+            mouseY <= selectedBird.position.y + selectedBird.height 
+            ) {
+                birdToShoot = selectedBird;
+        }
+    }
+}
+function handleMouseMove(event){
+    if(birdToShoot != null){
+        
+        // birdToShoot.position.x = max(10,event.x);
+        
+        if(event.x > 175){
+            return;
+        }console.log(event.y)
+        if(event.y < 610 || event.y>780){
+            
+            return;
+        }
+        birdToShoot.position.x = Math.max(80,event.x);
+        birdToShoot.position.y = event.y;
+    }
+}
+function handleMouseUp(event){
+    birdToShoot = null;
+}
 
 
-
+canvas.addEventListener("mousedown", handleMouseDown);
+canvas.addEventListener("mousemove", handleMouseMove);
+canvas.addEventListener("mouseup", handleMouseUp);
 canvas.addEventListener("click", handleClick);

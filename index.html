@@ -9,13 +9,22 @@
       href="https://fonts.googleapis.com/css2?family=Bruno+Ace&family=Cardo&family=Concert+One&family=Dosis:wght@300&family=Josefin+Sans&family=Knewave&family=Poppins:wght@100;300;800&family=Quicksand:wght@500&family=Tangerine&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
     <link rel="stylesheet" href="./css/style.css" />
     <title>Angry Birds</title>
   </head>
   <body>
     <div id="custom-cursor"></div>
     <canvas id="canvas"></canvas>
+    <button class="btn" id="sound_btn">
+      <span class="material-symbols-outlined" id="volume-span">
+        volume_off
+      </span>
+    </button>
+
     <div class="container">
       <button class="btn" id="start_btn">START</button>
       <img
@@ -48,9 +57,6 @@
         class="floating-element"
         id="badpig3"
       />
-      <button class="btn" id="sound_btn"><span class="material-symbols-outlined" id="volume-span">
-        volume_off
-        </span></button>
     </div>
 
     <script src="./js/script.js"></script>

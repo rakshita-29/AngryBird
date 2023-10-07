@@ -20,8 +20,8 @@ window.addEventListener('load', floatElements);
 const customCursor = document.getElementById('custom-cursor');
 
 document.addEventListener('mousemove', (e) => {
-  customCursor.style.left = `${e.clientX-40}px`;
-  customCursor.style.top = `${e.clientY-40}px`;
+  customCursor.style.left = `${e.clientX - 40}px`;
+  customCursor.style.top = `${e.clientY - 40}px`;
 });
 
 document.addEventListener('mousedown', (e) => {
@@ -30,3 +30,27 @@ document.addEventListener('mousedown', (e) => {
 document.addEventListener('mouseup', () => {
   customCursor.style.backgroundImage = `url("images/hand1.png")`;
 });
+
+function init_levels() {
+  document.querySelector(".container").style.display = "none";
+  document.querySelector(".level_container").style.display = "block";
+  document.body.style.background = "url('images/lvl_page_bg.jpg')";
+  document.body.style.backgroundSize = 'cover';
+
+  document.getElementById("backbutton").style.display = 'block';
+  page++;
+}
+function backButton() {
+  //Home Page
+  if (page == 1) {
+    document.querySelector(".level_container").style.display = "none";
+    document.querySelector(".container").style.display = "block";
+    document.getElementById("backbutton").style.display = 'none';
+    document.body.style.background = "url('images/bg.jpg')";
+    page = 0;
+  }
+}
+var page = 0;
+
+document.getElementById("backbutton").addEventListener("click",backButton);
+document.getElementById("start_btn").addEventListener("click", init_levels)

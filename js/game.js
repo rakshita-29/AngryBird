@@ -2,12 +2,17 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+const ground = canvas.height - 20
+const slingShotHeight = 180;
+var isSlingShotActive = false;
+let selectedBird = null;
+let isDragging = false;
 
 class Bird {
     constructor(imagePath, width, height, x) {
         this.position = {
             x: x,
-            y: 550,
+            y: ground - height,
         };
         this.originalY = this.position.y;
         this.velocityY = -Math.random() * 5;
@@ -18,53 +23,101 @@ class Bird {
             this.height = height;
             this.draw();
         };
+        this.not_used = true;
     }
     draw() {
         ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
     update() {
-        this.position.y += this.velocityY;
-        
-        this.velocityY += 0.1; // Adjust the gravity strength as needed
-        
-        if (this.position.y >= this.originalY) {
-            this.position.y = this.originalY;
-            this.velocityY = -Math.random() * 5;
+        if (this.not_used) {
+            this.position.y += this.velocityY;
+
+            this.velocityY += 0.2;
+
+            if (this.position.y >= this.originalY) {
+                this.position.y = this.originalY;
+
+                this.velocityY = -Math.random() * 8;
+
+            }
         }
-        
-        this.draw(); // Redraw the bird
+        this.draw();
     }
 }
 
 const backgroundImage = new Image();
 backgroundImage.src = "images/lvl_bg.jpg";
 
-function drawSlingshot() {
-    var ss = new Image();
-    ss.src = "images/slingshot.png";
-    ss.onload = function () {
-        console.log(ss);
-        ctx.drawImage(ss, 150, 490, 70, 130);
-    };
+class slingShot {
+    constructor() {
+        this.image = new Image();
+        this.image.src = "images/slingshot.png";
+        this.width = 100;
+        this.height = 180;
+        this.position = {
+            x:150,
+            y:ground-this.height,
+        }
+        this.image.onload = () => {
+            this.draw();
+        };
+    }
+    draw() {
+        ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
+    }
+    update(){
+        // this.position = {
+        //     x:150,
+        //     y:ground-this.height,
+        // }
+        this.draw();
+    }
 }
 
+
 const birds = [];
-
+const slingShotVar = new slingShot()
 function main() {
-    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (const bird of birds) {
         bird.update();
     }
+    slingShotVar.draw();
     requestAnimationFrame(main);
 }
+function handleClick(event) {
+    const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+    const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+    for (const bird of birds) {
+        if (
+            mouseX >= bird.position.x &&
+            mouseX <= bird.position.x + bird.width &&
+            mouseY >= bird.position.y &&
+            mouseY <= bird.position.y + bird.height &&
+            !isSlingShotActive
+        ) {
+            bird.position.x = 170;
+            bird.position.y = ground - slingShotHeight;
+            bird.not_used = false;
+            isSlingShotActive = true;
+            selectedBird = bird;
+            isDragging = true;
+        }
+    }
+}
+
 
 backgroundImage.onload = function () {
-    drawSlingshot();
-    const Bird1 = new Bird("images/birds/red.png", 60, 50, 250);
-    const Bird2 = new Bird("images/birds/red.png", 60, 50, 320);
-    const Bird3 = new Bird("images/birds/red.png", 60, 50, 390);
+    const Bird1 = new Bird("images/birds/red.png", 60, 50, 300);
+    const Bird2 = new Bird("images/birds/red.png", 60, 50, 370);
+    const Bird3 = new Bird("images/birds/red.png", 60, 50, 440);
     birds.push(Bird1, Bird2, Bird3);
 
-    main(); // Start the animation loop
+    main();
 };
+
+
+
+
+canvas.addEventListener("click", handleClick);

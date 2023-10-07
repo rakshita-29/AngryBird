@@ -17,15 +17,12 @@
     * {
         margin: 0px;
         padding: 0px;
-        box-sizing: border-box;
-        background-repeat: no-repeat;
-        background-size: cover;
+
         cursor: none;
     }
 
     html,
     body {
-        height: 100%;
         overflow: hidden;
     }
 
@@ -37,6 +34,12 @@
         background-size: cover;
         pointer-events: none;
         z-index: 100;
+    }
+    #canvas{
+        box-sizing: border-box;
+        background: url("images/gamebg.png");
+        background-size: contain;
+
     }
 </style>
 

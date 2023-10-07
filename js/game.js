@@ -140,12 +140,12 @@ function handleMouseMove(event){
         if(event.x > 175){
             return;
         }console.log(event.y)
-        if(event.y < 610 || event.y>780){
+        if(event.y > 610 && event.y<780){
             
-            return;
+            birdToShoot.position.y = event.y;
         }
         birdToShoot.position.x = Math.max(80,event.x);
-        birdToShoot.position.y = event.y;
+        
     }
 }
 function handleMouseUp(event){

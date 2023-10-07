@@ -2,6 +2,7 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  cursor: none;
 }
 
 html,
@@ -17,6 +18,17 @@ body {
   width: 100%;
   height: 100%;
 }
+
+body #custom-cursor {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background-image: url('../images/hand1.png');
+  background-size: cover;
+  pointer-events: none;
+  z-index: 100;
+}
+
 #start_btn {
   position: absolute;
   bottom: 12%;

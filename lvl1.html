@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="custom-cursor"></div>
+    <canvas id="canvas"></canvas>
+    <script src="js/game.js"></script>
+    <script src="js/script.js"></script>
+</body>
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+        background-repeat: no-repeat;
+        background-size: cover;
+        cursor: none;
+    }
+
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    body #custom-cursor {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        background-image: url('../images/hand1.png');
+        background-size: cover;
+        pointer-events: none;
+        z-index: 100;
+    }
+</style>
+
+</html>

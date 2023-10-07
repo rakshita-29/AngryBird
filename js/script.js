@@ -20,13 +20,13 @@ window.addEventListener('load', floatElements);
 const customCursor = document.getElementById('custom-cursor');
 
 document.addEventListener('mousemove', (e) => {
-  customCursor.style.left = `${e.clientX}px`;
-  customCursor.style.top = `${e.clientY}px`;
+  customCursor.style.left = `${e.clientX-40}px`;
+  customCursor.style.top = `${e.clientY-40}px`;
 });
 
 document.addEventListener('mousedown', (e) => {
-  customCursor.style.backgroundImage = `url("../images/hand2.png")`;
+  customCursor.style.backgroundImage = `url("images/hand2.png")`;
 })
 document.addEventListener('mouseup', () => {
-  customCursor.style.backgroundImage = `url("../images/hand1.png")`;
+  customCursor.style.backgroundImage = `url("images/hand1.png")`;
 });

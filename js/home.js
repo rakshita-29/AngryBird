@@ -1,4 +1,4 @@
-var audio = new Audio('../sounds/theme_song.mp3');
+var audio = new Audio('sounds/theme_song.mp3');
 var isPlaying = false;
 
 const volume_toggele_btn = document.getElementById("volume-span")
@@ -17,7 +17,7 @@ function toggleAudio() {
 document.getElementById('sound_btn').addEventListener('click', toggleAudio);
 
 //click sound for button
-var clickSound = new Audio('../sounds/click-sound.wav');
+var clickSound = new Audio('sounds/click-sound.wav');
 
 var buttons = document.querySelectorAll('.btn');
 

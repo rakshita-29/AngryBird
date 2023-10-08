@@ -170,3 +170,49 @@ body #custom-cursor {
   -webkit-text-stroke: 3px black;
   text-align: center;
 }
+/* For Ending Screen */
+
+.ending_container {
+  width: 100%;
+  height: 100%;
+  background: url("./images/gameover_bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: none;
+}
+
+#playagain {
+  position: absolute;
+  bottom: 25%;
+  left: 40%;
+  font-size: 3rem;
+  padding: 10px;
+  -webkit-text-stroke: 3.5px black;
+  width: 20%;
+}
+#homebtn {
+  position: absolute;
+  bottom: 10%;
+  left: 40%;
+  font-size: 3rem;
+  padding: 10px;
+  -webkit-text-stroke: 3.5px black;
+  width: 20%;
+}
+
+.gameover h1 {
+  font-size: 6rem;
+  padding: 50px 0px 0px 20px;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stars span {
+  font-size: 10rem;
+  color: rgb(156, 151, 151);
+  /* G rgb(255,215,0) */
+}

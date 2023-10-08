@@ -9,8 +9,12 @@ let selectedBird = null;
 let isDragging = false;
 let birdToShoot = null;
 let launchPosition = null;
-
-
+let shootStartTime = null;
+let power = null;
+let angleShoot = null;
+let currentTimeStart = null;
+let shootTheBird = false;
+let flying_bird = null;
 class Bird {
     constructor(imagePath, width, height, x) {
         this.position = {
@@ -27,30 +31,67 @@ class Bird {
             this.draw();
         };
         this.not_used = true;
+
     }
     draw() {
         ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
     update() {
-        if (this.not_used) {
-            this.position.y += this.velocityY;
 
-            this.velocityY += 0.2;
-
-            if (this.position.y >= this.originalY) {
-                this.position.y = this.originalY;
-
-                this.velocityY = -Math.random() * 8;
-
+            if (this.not_used) {
+                this.position.y += this.velocityY;
+    
+                this.velocityY += 0.2;
+    
+                if (this.position.y >= this.originalY) {
+                    this.position.y = this.originalY;
+    
+                    this.velocityY = -Math.random() * 8;
+    
+                }
             }
+            if(this.position.x < 0){
+                this.position.x =0;
+            }
+            if(this.position.x > canvas.width){
+                this.position.x = canvas.height -10;
+            }
+            if(this.position.t < 0){
+                this.position.x = 10;
+            }
+            if(this.position.y > canvas.height){
+                this.position.y = canvas.height - 80;
+            }
+            if(shootTheBird){
+                if(this.position.y > ground-50){
+                    // Delete this class
+                    const index = birds.indexOf(this);
+                    if (index !== -1) {
+                        birds.splice(index, 1);
+                    }
+                    console.log(birds);
+                    isSlingShotActive = false;
+                }
+            }
+            this.draw();
         }
-        this.draw();
+
+    shoot(){
+        // console.log("Shooting");
+        if(shootTheBird){
+
+            const Vx = power * Math.cos(degreeToRadian(angleShoot));
+            const Vy = power * Math.sin(degreeToRadian(angleShoot));
+            const g = 9.8;
+            const t = (Date.now() - currentTimeStart) / 100; // Convert to one-tenth seconds
+            console.log(t);
+            this.position.x = Vx * t + 170;
+            this.position.y =  canvas.height - (Vy * t - 0.5 * g * t * t) - (slingShotHeight);
+            // console.log(this.position.x)
+            this.draw();
+        }
     }
 }
-
-const backgroundImage = new Image();
-backgroundImage.src = "images/lvl_bg.jpg";
-
 class slingShot {
     constructor() {
         this.image = new Image();
@@ -69,14 +110,15 @@ class slingShot {
         ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
     update() {
-        // this.position = {
-        //     x:150,
-        //     y:ground-this.height,
-        // }
         this.draw();
     }
 }
 
+function degreeToRadian(degree) {
+    return degree * (Math.PI / 180);
+}
+const backgroundImage = new Image();
+backgroundImage.src = "images/lvl_bg.jpg";
 
 const birds = [];
 const slingShotVar = new slingShot()
@@ -84,6 +126,9 @@ function main() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (const bird of birds) {
         bird.update();
+    }
+    if(flying_bird != null){
+        flying_bird.shoot();
     }
     slingShotVar.draw()
     requestAnimationFrame(main);
@@ -128,38 +173,43 @@ function handleMouseDown(event) {
             mouseX >= selectedBird.position.x &&
             mouseX <= selectedBird.position.x + selectedBird.width &&
             mouseY >= selectedBird.position.y &&
-            mouseY <= selectedBird.position.y + selectedBird.height 
-            ) {
-                birdToShoot = selectedBird;
+            mouseY <= selectedBird.position.y + selectedBird.height
+        ) {
+            birdToShoot = selectedBird;
         }
     }
 }
-function handleMouseMove(event){
-    if(birdToShoot != null){
-        
-        // birdToShoot.position.x = max(10,event.x);
-        
-        if(event.x > 175){
+function handleMouseMove(event) {
+    if (birdToShoot != null) {
+
+        if (event.x > 175) {
             return;
         }//console.log(event.y)
-        if(event.y > 610 && event.y<780){
-            
+        if (event.y > 610 && event.y < 780) {
+
             birdToShoot.position.y = event.y;
         }
-        birdToShoot.position.x = Math.max(80,event.x);
-        
+        birdToShoot.position.x = Math.max(80, event.x);
+
     }
 }
-function handleMouseUp(event){
-    if(birdToShoot!=null){
+function handleMouseUp(event) {
+    if (birdToShoot != null) {
         // Caculate Angle to shoot
         const dx = birdToShoot.position.x - 170;
         const dy = birdToShoot.position.y - (ground - slingShotHeight);
         const angle = Math.atan2(dy, dx);
-        console.log(birdToShoot.position.x,birdToShoot.position.y);
+        // console.log(birdToShoot.position.x, birdToShoot.position.y);
         const angleDegrees = (angle * 180) / Math.PI;
-        console.log(`Angle of shooting: ${angleDegrees} degrees`);
+        power = 100;
+        angleShoot = 180 - angleDegrees
+        currentTimeStart = Date.now();
+        console.log(`Angle of shooting: ${angleShoot} degrees`);
+        flying_bird = birdToShoot;
+        shootTheBird = true;
+        flying_bird.shoot()
         birdToShoot = null;
+        // birdToShoot = null;
     }
 }
 

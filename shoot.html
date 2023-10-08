@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Projectile motion</title>
+</head>
+
+<body>
+
+  <input type="number" id="angle" placeholder="Enter angle" />
+
+  <button onclick="start()">Go!</button>
+  <br>
+
+  <canvas id="canvas" width="1400" height="700" style="border: 1px solid black"></canvas>
+
+  <!-- <img id="projectile" src="images/birds/red.png" style="display: none;" /> -->
+  <img id="projectile" src="images/birds/red.png" width="100" height="100" style="display: none;" />
+
+
+  <script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+ctx.fillStyle = "grey";
+
+// Get the projectile image element
+const projectileImg = document.getElementById("projectile");
+
+function draw(Vo, angle) {
+  const Vx = Vo * Math.cos(angle);
+  const Vy = Vo * Math.sin(angle);
+  const g = 9.8;
+  const start_time = Date.now();
+
+  function update() {
+    const t = (Date.now() - start_time) / 100; // Convert to one-tenth seconds
+    const x = Vx * t;
+    const y = canvas.height - (Vy * t - 0.5 * g * t * t);
+    console.log(t);
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw the projectile image at the new position with the specified width and height
+    ctx.drawImage(projectileImg, x, y, 100, 100); // 100x100 pixels
+
+    if (y > 0) {
+      requestAnimationFrame(update);
+    }
+  }
+  update();
+}
+
+function degreeToRadian(degree) {
+  return degree * (Math.PI / 180);
+}
+
+function start() {
+  const velocity = 100;
+  const angle = document.getElementById("angle").value;
+  draw(velocity, degreeToRadian(angle));
+}
+
+// start();
+
+
+  </script>
+</body>
+
+</html>

@@ -1,3 +1,4 @@
+// Funtion to Show Level1
 function showLevel1(){
     document.querySelector(".level_container").style.display = 'none';
     console.log("hey");

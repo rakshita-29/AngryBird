@@ -1,3 +1,4 @@
+// Function to add Animation to Landing Page Objects
 function floatElements() {
   const elements = document.querySelectorAll('.floating-element');
   elements.forEach((element, index) => {
@@ -15,15 +16,13 @@ function floatElements() {
   });
 }
 
-window.addEventListener('load', floatElements);
-
-const customCursor = document.getElementById('custom-cursor');
-
+// Moving Hand Along With Position Of Mouse
 document.addEventListener('mousemove', (e) => {
   customCursor.style.left = `${e.clientX - 40}px`;
   customCursor.style.top = `${e.clientY - 40}px`;
 });
 
+// Changing Hand Icon on Click
 document.addEventListener('mousedown', (e) => {
   customCursor.style.backgroundImage = `url("images/hand2.png")`;
 })
@@ -31,17 +30,18 @@ document.addEventListener('mouseup', () => {
   customCursor.style.backgroundImage = `url("images/hand1.png")`;
 });
 
+// Function To Display Level Selection Page
 function init_levels() {
   document.querySelector(".container").style.display = "none";
   document.querySelector(".level_container").style.display = "block";
   document.body.style.background = "url('images/lvl_page_bg.jpg')";
   document.body.style.backgroundSize = 'cover';
-
   document.getElementById("backbutton").style.display = 'block';
   page++;
 }
+
+// Function To Return To Home Page
 function backButton() {
-  //Home Page
   if (page == 1) {
     document.querySelector(".level_container").style.display = "none";
     document.querySelector(".container").style.display = "block";
@@ -50,7 +50,10 @@ function backButton() {
     page = 0;
   }
 }
-var page = 0;
 
+// Current Page Counter
+var page = 0;
+const customCursor = document.getElementById('custom-cursor');
+window.addEventListener('load', floatElements);
 document.getElementById("backbutton").addEventListener("click",backButton);
 document.getElementById("start_btn").addEventListener("click", init_levels)

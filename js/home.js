@@ -16,7 +16,7 @@ function toggleAudio() {
 }
 document.getElementById('sound_btn').addEventListener('click', toggleAudio);
 
-//click sound for button
+// Click Sound For Button
 var clickSound = new Audio('sounds/click-sound.wav');
 
 var buttons = document.querySelectorAll('.btn');

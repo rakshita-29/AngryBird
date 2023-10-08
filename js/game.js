@@ -15,6 +15,10 @@ let angleShoot = null;
 let currentTimeStart = null;
 let shootTheBird = false;
 let flying_bird = null;
+let isGameOver = false;
+const star1 = document.getElementById("star1");
+const star2 = document.getElementById("star2");
+const star3 = document.getElementById("star3");
 class Bird {
     constructor(imagePath, width, height, x) {
         this.position = {
@@ -138,7 +142,7 @@ class tnt {
 }
 
 class pig {
-    constructor(imagePath, width, height, x,y) {
+    constructor(imagePath, width, height, x, y) {
         this.position = {
             x: x,
             y: y - height,
@@ -165,11 +169,57 @@ function degreeToRadian(degree) {
 const backgroundImage = new Image();
 backgroundImage.src = "images/gamebg.png";
 
-const birds = [];
-const tnts = [];
-const pigs=[]
+var birds = [];
+var tnts = [];
+var pigs = [];
 const slingShotVar = new slingShot()
+
+function playAgain() {
+    canvas.style.display = "block";
+    document.querySelector(".ending_container").style.display = "none";
+    document.body.style.background = "none";
+    birds = [];
+    tnts = [];
+    pigs = [];
+    isGameOver = false;
+    isSlingShotActive = false;
+    star1.style.color = "rgb(156, 151, 151)";
+    star2.style.color = "rgb(156, 151, 151)";
+    star3.style.color = "rgb(156, 151, 151)";
+    init();
+}
+
+function gameover() {
+    canvas.style.display = "none";
+    document.querySelector(".ending_container").style.display = "block";
+    document.body.style.background = 'url("./images/gameover_bg.jpg")';
+    document.body.style.backgroundSize = 'cover';
+
+    const gold = "rgb(255,215,0)";
+    switch (pigs.length) {
+        case 0:
+            star1.style.color = gold;
+            star2.style.color = gold;
+            star3.style.color = gold;
+            break;
+        case 1:
+            star1.style.color = gold;
+            star2.style.color = gold;
+            break;
+        case 2:
+            star1.style.color = gold;
+            break;
+    }
+    document.getElementById("playagain").addEventListener("click", playAgain);
+}
+
 function main() {
+    if (isGameOver) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        console.log("Enddddd");
+
+        return;
+    }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
@@ -193,6 +243,12 @@ function main() {
 
     }
 
+    if (birds.length == 0 || pigs.length == 0) {
+        setTimeout(function () {
+            gameover();
+            isGameOver = true;
+        }, 2000);
+    }
 
     if (flying_bird != null) {
         flying_bird.shoot();
@@ -210,8 +266,7 @@ function main() {
     requestAnimationFrame(main);
 }
 
-
-backgroundImage.onload = function () {
+function init() {
     const Bird1 = new Bird("images/birds/red.png", 60, 50, 300);
     const Bird2 = new Bird("images/birds/red.png", 60, 50, 370);
     const Bird3 = new Bird("images/birds/red.png", 60, 50, 440);
@@ -220,12 +275,15 @@ backgroundImage.onload = function () {
     const tnt2 = new tnt("images/tnt.png", 100, 100, 1250);
     const tnt3 = new tnt("images/tnt.png", 100, 100, 1050);
     tnts.push(tnt1, tnt2, tnt3);
-    const pig1 = new pig("images/badpig.png", 80, 80, 1050,canvas.height -120);
-    const pig2 = new pig("images/badpig.png", 80, 80, 1160,canvas.height -20);
-    const pig3 = new pig("images/badpig.png", 80, 80, 1360,canvas.height -120);
+    const pig1 = new pig("images/badpig.png", 80, 80, 1050, canvas.height - 120);
+    const pig2 = new pig("images/badpig.png", 80, 80, 1160, canvas.height - 20);
+    const pig3 = new pig("images/badpig.png", 80, 80, 1360, canvas.height - 120);
     pigs.push(pig1, pig2, pig3);
+
+
     main();
 };
+backgroundImage.onload = init();
 
 function handleClick(event) {
     const mouseX = event.clientX - canvas.getBoundingClientRect().left;

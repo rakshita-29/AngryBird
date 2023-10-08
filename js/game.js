@@ -173,9 +173,27 @@ function main() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-    for (const bird of birds) {
-        bird.update();
+
+    for (let i = birds.length - 1; i >= 0; i--) {
+        const bird = birds[i];
+
+        for (let j = pigs.length - 1; j >= 0; j--) {
+            const pig = pigs[j];
+
+            if (
+                bird.position.x + bird.width > pig.position.x &&
+                bird.position.x < pig.position.x + pig.width &&
+                bird.position.y + bird.height > pig.position.y &&
+                bird.position.y < pig.position.y + pig.height
+            ) {
+                // Bird and pig collided, remove the pig
+                pigs.splice(j, 1);
+            }
+        }
+
     }
+
+
     if (flying_bird != null) {
         flying_bird.shoot();
     }
@@ -184,6 +202,9 @@ function main() {
     }
     for (const pig of pigs) {
         pig.update();
+    }
+    for (const bird of birds) {
+        bird.update();
     }
     slingShotVar.draw()
     requestAnimationFrame(main);

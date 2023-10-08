@@ -8,6 +8,8 @@ var isSlingShotActive = false;
 let selectedBird = null;
 let isDragging = false;
 let birdToShoot = null;
+let launchPosition = null;
+
 
 class Bird {
     constructor(imagePath, width, height, x) {
@@ -139,7 +141,7 @@ function handleMouseMove(event){
         
         if(event.x > 175){
             return;
-        }console.log(event.y)
+        }//console.log(event.y)
         if(event.y > 610 && event.y<780){
             
             birdToShoot.position.y = event.y;
@@ -149,7 +151,16 @@ function handleMouseMove(event){
     }
 }
 function handleMouseUp(event){
-    birdToShoot = null;
+    if(birdToShoot!=null){
+        // Caculate Angle to shoot
+        const dx = birdToShoot.position.x - 170;
+        const dy = birdToShoot.position.y - (ground - slingShotHeight);
+        const angle = Math.atan2(dy, dx);
+        console.log(birdToShoot.position.x,birdToShoot.position.y);
+        const angleDegrees = (angle * 180) / Math.PI;
+        console.log(`Angle of shooting: ${angleDegrees} degrees`);
+        birdToShoot = null;
+    }
 }
 
 

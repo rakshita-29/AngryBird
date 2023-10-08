@@ -6,6 +6,11 @@ function showLevel1(){
     document.getElementById("sound_btn").style.display = 'none';
     document.getElementById("canvas").style.display = 'block';
     document.body.style.background = 'none';
+
+    // Stopping Audio
+    if(isPlaying){
+        toggleAudio();
+    }
 }
 
 

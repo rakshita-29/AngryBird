@@ -33,6 +33,13 @@ var birds = [];
 var tnts = [];
 var pigs = [];
 
+// Game Sounds
+const selectSound = new Audio("sounds/select.mp3");
+const dragSound = new Audio("sounds/strech.mp3");
+const releaseSound = new Audio("sounds/release.mp3");
+const endingSound = new Audio("sounds/ending.mp3");
+const pigDestroy = new Audio("sounds/pig_destroy.mp3");
+
 class Bird {
     constructor(imagePath, width, height, x) {
         this.position = {
@@ -198,22 +205,28 @@ function degreeToRadian(degree) {
     return degree * (Math.PI / 180);
 }
 
+// Function To Play Sounds
+function playSound(sound) {
+    sound.currentTime = 0; 
+    sound.play();
+  }
+
 // Function To Handle Replay
 function playAgain() {
 
-    // Re-Showing Canvas and Hiding End-Game Screen
+    // Re-Showing Canvas And Hiding End-Game Screen
     canvas.style.display = "block";
     document.querySelector(".ending_container").style.display = "none";
     document.body.style.background = "none";
 
-    // Setting Initial Values to all variables
+    // Setting Initial Values To All Variables
     birds = [];
     tnts = [];
     pigs = [];
     isGameOver = false;
     isSlingShotActive = false;
 
-    // Changing Stars Color Back to Grey
+    // Changing Stars Color Back To Grey
     star1.style.color = "rgb(156, 151, 151)";
     star2.style.color = "rgb(156, 151, 151)";
     star3.style.color = "rgb(156, 151, 151)";
@@ -231,7 +244,7 @@ function gameover() {
     document.body.style.background = 'url("./images/gameover_bg.jpg")';
     document.body.style.backgroundSize = 'cover';
 
-    // Changing Stars Color to golden
+    // Changing Stars Color To Golden
     switch (pigs.length) {
         case 0:
             star1.style.color = gold;
@@ -246,18 +259,20 @@ function gameover() {
             star1.style.color = gold;
             break;
     }
+
+
     document.getElementById("playagain").addEventListener("click", playAgain);
 }
 
 
 
-// Function to Load Birds on Slingshot
+// Function To Load Birds On Slingshot
 function handleClick(event) {
 
     const mouseX = event.clientX - canvas.getBoundingClientRect().left;
     const mouseY = event.clientY - canvas.getBoundingClientRect().top;
     
-    // Detect Clicked on Bird
+    // Detect Clicked On Bird
     for (const bird of birds) {
         if (
             mouseX >= bird.position.x &&
@@ -266,13 +281,16 @@ function handleClick(event) {
             mouseY <= bird.position.y + bird.height &&
             !isSlingShotActive
         ) {
-            // Moving Bird to slingShot Shooting Area
+            // Moving Bird To SlingShot Shooting Area
             bird.position.x = 170;
             bird.position.y = ground - slingShotHeight;
             bird.not_used = false;
             isSlingShotActive = true;
             selectedBird = bird;
             isDragging = true;
+
+            // Playing Selection Sound
+            playSound(selectSound);
         }
     }
 }
@@ -289,6 +307,9 @@ function handleMouseDown(event) {
             mouseY <= selectedBird.position.y + selectedBird.height
         ) {
             birdToShoot = selectedBird;
+
+            // Playing Dragging Sounds 
+            playSound(dragSound);
         }
     }
 }
@@ -336,6 +357,10 @@ function handleMouseUp(event) {
         shootTheBird = true;
         flying_bird.shoot()
         birdToShoot = null;
+
+
+        // Playing Shooting Sound
+        playSound(releaseSound);
     }
 }
 
@@ -365,6 +390,9 @@ function main() {
             ) {
                 // Removing Pig If Hit By Bird
                 pigs.splice(j, 1);
+
+                // Plaing Destroy Sound
+                playSound(pigDestroy);
             }
         }
 
@@ -372,9 +400,14 @@ function main() {
 
     // Game-Over Logic
     if (birds.length == 0 || pigs.length == 0) {
+
+        // Playing Ending Sound
+        playSound(endingSound);
+        
         setTimeout(function () {
             gameover();
             isGameOver = true;
+
         }, 2000);
     }
 

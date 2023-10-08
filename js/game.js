@@ -174,7 +174,7 @@ var tnts = [];
 var pigs = [];
 const slingShotVar = new slingShot()
 
-function playAgain(){
+function playAgain() {
     canvas.style.display = "block";
     document.querySelector(".ending_container").style.display = "none";
     document.body.style.background = "none";
@@ -196,7 +196,7 @@ function gameover() {
     document.body.style.backgroundSize = 'cover';
 
     const gold = "rgb(255,215,0)";
-    switch(pigs.length){
+    switch (pigs.length) {
         case 0:
             star1.style.color = gold;
             star2.style.color = gold;
@@ -210,7 +210,7 @@ function gameover() {
             star1.style.color = gold;
             break;
     }
-    document.getElementById("playagain").addEventListener("click",playAgain);
+    document.getElementById("playagain").addEventListener("click", playAgain);
 }
 
 function main() {
@@ -244,8 +244,10 @@ function main() {
     }
 
     if (birds.length == 0 || pigs.length == 0) {
-        gameover();
-        isGameOver = true;
+        setTimeout(function () {
+            gameover();
+            isGameOver = true;
+        }, 2000);
     }
 
     if (flying_bird != null) {

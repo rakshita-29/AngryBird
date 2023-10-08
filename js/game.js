@@ -84,7 +84,7 @@ class Bird {
             const Vy = power * Math.sin(degreeToRadian(angleShoot));
             const g = 9.8;
             const t = (Date.now() - currentTimeStart) / 100; // Convert to one-tenth seconds
-            console.log(t);
+            // console.log(power);
             this.position.x = Vx * t + 170;
             this.position.y =  canvas.height - (Vy * t - 0.5 * g * t * t) - (slingShotHeight);
             // console.log(this.position.x)
@@ -201,7 +201,7 @@ function handleMouseUp(event) {
         const angle = Math.atan2(dy, dx);
         // console.log(birdToShoot.position.x, birdToShoot.position.y);
         const angleDegrees = (angle * 180) / Math.PI;
-        power = 100;
+        power = Math.sqrt(dx**2+dy**2);
         angleShoot = 180 - angleDegrees
         currentTimeStart = Date.now();
         console.log(`Angle of shooting: ${angleShoot} degrees`);

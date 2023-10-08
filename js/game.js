@@ -318,14 +318,14 @@ function handleMouseDown(event) {
 function handleMouseMove(event) {
     if (birdToShoot != null) {
         // Adding X-Offset
-        if (event.x > 175) {
-            return;
-        }
 
         // Adding Y-Offset
-        if (event.y > 610 && event.y < 780) {
+        if (event.y > ground-slingShotHeight*1.5 && event.y < ground-slingShotHeight / 2) {
 
             birdToShoot.position.y = event.y;
+        }
+        if (event.x > 175) {
+            return;
         }
         birdToShoot.position.x = Math.max(80, event.x);
 

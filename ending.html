@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ending</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bruno+Ace&family=Cardo&family=Concert+One&family=Dosis:wght@300&family=Josefin+Sans&family=Knewave&family=Poppins:wght@100;300;800&family=Quicksand:wght@500&family=Tangerine&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://fontawesome.com/icons/star?f=classic&s=solid&sz=lg&pc=%23000000">
+    <link rel="stylesheet" href="./css/style.css" />
+    <style>
+      body {
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+      }
+      .ending_container {
+        width: 100%;
+        height: 100%;
+        background: url("./images/gameover_bg.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        
+      }
+      #playagain {
+        position: absolute;
+        bottom: 25%;
+        left: 40%;
+        font-size: 3rem;
+        padding: 10px;
+        -webkit-text-stroke: 3.5px black;
+      }
+      .gameover h1 {
+        font-size: 6rem;
+        padding: 50px 0px 0px 20px;
+      }
+      .fa-solid{
+        font-size: 5rem;
+        width: 50px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="custom-cursor"></div>
+    <div class="ending_container">
+      <div class="gameover">
+        <h1 class="h-primary">GAME OVER!</h1>
+        <span class="stars">
+            <i class="fa-solid fa-star fa-lg" id="star1"></i></span>
+            <i class="fa-solid fa-star fa-lg" ></i></span>
+            <i class="fa-solid fa-star fa-lg" ></i></span>
+        </div>
+      </div>
+      <button class="btn" id="playagain">PLay Again</button>
+    </div>
+  </body>
+</html>

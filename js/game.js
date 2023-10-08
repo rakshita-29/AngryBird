@@ -118,12 +118,14 @@ function degreeToRadian(degree) {
     return degree * (Math.PI / 180);
 }
 const backgroundImage = new Image();
-backgroundImage.src = "images/lvl_bg.jpg";
+backgroundImage.src = "images/gamebg.png";
 
 const birds = [];
 const slingShotVar = new slingShot()
 function main() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(backgroundImage,0,0,canvas.width,canvas.height);
+
     for (const bird of birds) {
         bird.update();
     }

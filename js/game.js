@@ -331,20 +331,21 @@ function handleMouseMove(event) {
         var y = event.clientY;
 
         var dx = x - slingShotPosition;
-        var dy = ground - slingShotHeight - y;  // Corrected dy calculation
+        var dy = ground - slingShotHeight - y;
 
         var distance = Math.sqrt(dx ** 2 + dy ** 2);
 
         if (distance < 130) {
-            birdToShoot.position.x = x;
-            birdToShoot.position.y = ground - slingShotHeight - dy; // Adjust y-coordinate
+            birdToShoot.position.x = x - 30;
+            birdToShoot.position.y = ground - slingShotHeight - dy -30;
         } else {
             var m = dy / dx;
             // Calculating Ratio For max distance
             var ratio = dx / distance;
-            birdToShoot.position.x = slingShotPosition + ratio * maxPower;
-            birdToShoot.position.y = ground - slingShotHeight - (m * ratio * maxPower);
+            birdToShoot.position.x = slingShotPosition + ratio * maxPower - 30;
+            birdToShoot.position.y = ground - slingShotHeight - (m * ratio * maxPower) - 30;
         }
+
     }
 }
 

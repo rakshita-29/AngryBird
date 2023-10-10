@@ -7,6 +7,7 @@ canvas.height = window.innerHeight;
 // Initializing Ground For Reference
 const ground = canvas.height - 20
 const slingShotHeight = 180;
+const slingShotPosition = 170;
 
 // Other Properties
 var isSlingShotActive = false;
@@ -21,6 +22,10 @@ let currentTimeStart = null;
 let shootTheBird = false;
 let flying_bird = null;
 let isGameOver = false;
+
+// Static Variables
+
+const maxPower = 120;
 
 // Winning Starts
 const star1 = document.getElementById("star1");
@@ -83,7 +88,12 @@ class Bird {
             this.position.x = 0;
         }
         if (this.position.x > canvas.width) {
-            this.position.x = canvas.height - 10;
+            const index = birds.indexOf(this);
+
+            if (index !== -1) {
+                birds.splice(index, 1);
+            }
+            isSlingShotActive = false;
         }
 
         if (this.position.t < 0) {
@@ -96,7 +106,7 @@ class Bird {
 
         // If Bird is Shooted And Touched The Ground
         if (shootTheBird) {
-            if (this.position.y > ground - 50) {
+            if (this.position.y > ground - 50 || this.position.x > canvas.width) {
                 const index = birds.indexOf(this);
 
                 if (index !== -1) {
@@ -116,7 +126,7 @@ class Bird {
             const Vy = power * Math.sin(degreeToRadian(angleShoot));
             const g = 9.8;
             const t = (Date.now() - currentTimeStart) / 100;
-            this.position.x = Vx * t + 170;
+            this.position.x = Vx * t + slingShotPosition;
             this.position.y = canvas.height - (Vy * t - 0.5 * g * t * t) - (slingShotHeight);
             this.draw();
         }
@@ -207,9 +217,9 @@ function degreeToRadian(degree) {
 
 // Function To Play Sounds
 function playSound(sound) {
-    sound.currentTime = 0; 
+    sound.currentTime = 0;
     sound.play();
-  }
+}
 
 // Function To Handle Replay
 function playAgain() {
@@ -271,7 +281,7 @@ function handleClick(event) {
 
     const mouseX = event.clientX - canvas.getBoundingClientRect().left;
     const mouseY = event.clientY - canvas.getBoundingClientRect().top;
-    
+
     // Detect Clicked On Bird
     for (const bird of birds) {
         if (
@@ -282,7 +292,7 @@ function handleClick(event) {
             !isSlingShotActive
         ) {
             // Moving Bird To SlingShot Shooting Area
-            bird.position.x = 170;
+            bird.position.x = slingShotPosition;
             bird.position.y = ground - slingShotHeight;
             bird.not_used = false;
             isSlingShotActive = true;
@@ -317,28 +327,35 @@ function handleMouseDown(event) {
 // Function To Strech Birds
 function handleMouseMove(event) {
     if (birdToShoot != null) {
-        // Adding X-Offset
+        var x = event.clientX;
+        var y = event.clientY;
 
-        // Adding Y-Offset
-        if (event.y > ground-slingShotHeight*1.5 && event.y < ground-slingShotHeight / 2) {
+        var dx = x - slingShotPosition;
+        var dy = ground - slingShotHeight - y;  // Corrected dy calculation
 
-            birdToShoot.position.y = event.y;
+        var distance = Math.sqrt(dx ** 2 + dy ** 2);
+
+        if (distance < 130) {
+            birdToShoot.position.x = x;
+            birdToShoot.position.y = ground - slingShotHeight - dy; // Adjust y-coordinate
+        } else {
+            var m = dy / dx;
+            // Calculating Ratio For max distance
+            var ratio = dx / distance;
+            birdToShoot.position.x = slingShotPosition + ratio * maxPower;
+            birdToShoot.position.y = ground - slingShotHeight - (m * ratio * maxPower);
         }
-        if (event.x > 175) {
-            return;
-        }
-        birdToShoot.position.x = Math.max(80, event.x);
-
     }
 }
+
 
 // Function To Release Birds
 function handleMouseUp(event) {
     if (birdToShoot != null) {
 
         // Calculating X2-X1
-        const dx = birdToShoot.position.x - 170;
-        
+        const dx = birdToShoot.position.x - slingShotPosition;
+
         // Calculating Y2-Y1
         const dy = birdToShoot.position.y - (ground - slingShotHeight);
 
@@ -403,7 +420,7 @@ function main() {
 
         // Playing Ending Sound
         playSound(endingSound);
-        
+
         setTimeout(function () {
             gameover();
             isGameOver = true;

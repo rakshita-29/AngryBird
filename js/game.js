@@ -183,46 +183,60 @@ class tnt {
 
     update() {
         this.draw();
-         // explosion
-    if (shootTheBird) {
-      for (let i = birds.length - 1; i >= 0; i--) {
-        const bird = birds[i];
+        // explosion
+        if (shootTheBird) {
+            for (let i = birds.length - 1; i >= 0; i--) {
+                const bird = birds[i];
 
-        for (let j = tnts.length - 1; j >= 0; j--) {
-          const tnt = tnts[j];
+                for (let j = tnts.length - 1; j >= 0; j--) {
+                    const tnt = tnts[j];
 
-          if (
-            bird.position.x + bird.width > tnt.position.x &&
-            bird.position.x < tnt.position.x + tnt.width &&
-            bird.position.y + bird.height > tnt.position.y &&
-            bird.position.y < tnt.position.y + tnt.height
-          ) {
+                    if (
+                        bird.position.x + bird.width > tnt.position.x &&
+                        bird.position.x < tnt.position.x + tnt.width &&
+                        bird.position.y + bird.height > tnt.position.y &&
+                        bird.position.y < tnt.position.y + tnt.height
+                    ) {
 
-            tnts.splice(j, 1);
+                        
+                        const gifImage = new Image();
+                        gifImage.src = "images/explosion1.gif";
+                        gifImage.style.position = "absolute";
+                        gifImage.style.top = tnt.position.y - 55 + "px";
+                        gifImage.style.left = tnt.position.x - 35 + "px";
+                        document.body.appendChild(gifImage);
+                        
+                        gifImages.push(gifImage);
+                        
+                        playSound(tntexplosion);
+                        tnts.splice(j, 1);
 
-            const gifImage = new Image();
-            gifImage.src = "images/explosion1.gif"; 
-            gifImage.style.position = "absolute";
-            gifImage.style.top = tnt.position.y -55 +"px";
-            gifImage.style.left = tnt.position.x -35 + "px"; 
-            document.body.appendChild(gifImage); 
+                        setTimeout(() => {
+                            gifImage.style.display = "none";
+                            gifImages.splice(gifImages.indexOf(gifImage), 1);
+                        }, 1100);
 
-            gifImages.push(gifImage);
+                        for (let k = 0 ; k < pigs.length; k++) {
+                            const pig = pigs[k];
+                            console.log(k,pig.position.x);
+                            const distance = Math.sqrt(
+                                Math.pow(pig.position.x - tnt.position.x, 2) +
+                                Math.pow(pig.position.y - tnt.position.y, 2)
+                            );
+                             // Remove Pig If Distance is less than 100 units
+                            console.log(k,distance);
+                            if (distance <= 100) {
+                                pigs.splice(k, 1); 
+                            }
+                        }
+                    }
+                }
+            }
+            
 
-            playSound(tntexplosion);
 
-            setTimeout(() => {
-              gifImage.style.display = "none";
-              gifImages.splice(gifImages.indexOf(gifImage), 1);
-            }, 1100);
-          }
         }
-      }
-
-        
-
     }
-  }
 }
 
 class pig {
@@ -377,7 +391,7 @@ function handleMouseMove(event) {
 
         if (distance < 130) {
             birdToShoot.position.x = x - 30;
-            birdToShoot.position.y = ground - slingShotHeight - dy -30;
+            birdToShoot.position.y = ground - slingShotHeight - dy - 30;
         } else {
             var m = dy / dx;
             // Calculating Ratio For max distance

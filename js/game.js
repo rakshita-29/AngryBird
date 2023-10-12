@@ -44,6 +44,7 @@ const dragSound = new Audio("sounds/strech.mp3");
 const releaseSound = new Audio("sounds/release.mp3");
 const endingSound = new Audio("sounds/ending.mp3");
 const pigDestroy = new Audio("sounds/pig_destroy.mp3");
+const tntexplosion = new Audio("sounds/TNT_Explodes.mp3");
 
 class Bird {
     constructor(imagePath, width, height, x) {
@@ -158,6 +159,7 @@ class slingShot {
         this.draw();
     }
 }
+const gifImages = [];
 class tnt {
     constructor(imagePath, width, height, x) {
         this.position = {
@@ -181,8 +183,46 @@ class tnt {
 
     update() {
         this.draw();
+         // explosion
+    if (shootTheBird) {
+      for (let i = birds.length - 1; i >= 0; i--) {
+        const bird = birds[i];
+
+        for (let j = tnts.length - 1; j >= 0; j--) {
+          const tnt = tnts[j];
+
+          if (
+            bird.position.x + bird.width > tnt.position.x &&
+            bird.position.x < tnt.position.x + tnt.width &&
+            bird.position.y + bird.height > tnt.position.y &&
+            bird.position.y < tnt.position.y + tnt.height
+          ) {
+
+            tnts.splice(j, 1);
+
+            const gifImage = new Image();
+            gifImage.src = "images/explosion1.gif"; 
+            gifImage.style.position = "absolute";
+            gifImage.style.top = tnt.position.y -55 +"px";
+            gifImage.style.left = tnt.position.x -35 + "px"; 
+            document.body.appendChild(gifImage); 
+
+            gifImages.push(gifImage);
+
+            playSound(tntexplosion);
+
+            setTimeout(() => {
+              gifImage.style.display = "none";
+              gifImages.splice(gifImages.indexOf(gifImage), 1);
+            }, 1100);
+          }
+        }
+      }
+
+        
 
     }
+  }
 }
 
 class pig {

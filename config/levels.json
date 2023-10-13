@@ -1,0 +1,49 @@
+{
+    "1": {
+        "birds": [
+            {
+                "image": "images/birds/red.png",
+                "positionX": 300
+            },
+            {
+                "image": "images/birds/red.png",
+                "positionX": 370
+            },
+            {
+                "image": "images/birds/red.png",
+                "positionX": 440
+            }
+        ],
+        "pigs": [
+            {
+                "image": "images/badpig.png",
+                "positionX": 1050,
+                "positionY": 100
+            },
+            {
+                "image": "images/badpig.png",
+                "positionX": 1160,
+                "positionY": 0
+            },
+            {
+                "image": "images/badpig.png",
+                "positionX": 1360,
+                "positionY": 100
+            }
+        ],
+        "tnt":[
+            {
+                "image": "images/tnt.png",
+                "positionX": 1050
+            },
+            {
+                "image": "images/tnt.png",
+                "positionX": 1250
+            },
+            {
+                "image": "images/tnt.png",
+                "positionX": 1350
+            }
+        ]
+    }
+}

@@ -24,8 +24,14 @@ let flying_bird = null;
 let isGameOver = false;
 
 // Static Variables
-
+const birdWidth = 60;
+const birdHeight = 50;
 const maxPower = 120;
+const tntWidth = 100;
+const tntHeight = 100;
+const pigWidth = 80;
+const pigHeight = 80;
+
 
 // Winning Starts
 const star1 = document.getElementById("star1");
@@ -47,10 +53,10 @@ const pigDestroy = new Audio("sounds/pig_destroy.mp3");
 const tntexplosion = new Audio("sounds/TNT_Explodes.mp3");
 
 class Bird {
-    constructor(imagePath, width, height, x) {
+    constructor(imagePath, x) {
         this.position = {
             x: x,
-            y: ground - height,
+            y: ground - birdHeight,
         };
         this.originalY = this.position.y;
         this.velocityY = -Math.random() * 5;
@@ -58,8 +64,8 @@ class Bird {
         this.image = new Image();
         this.image.src = imagePath;
         this.image.onload = () => {
-            this.width = width;
-            this.height = height;
+            this.width = birdWidth;
+            this.height = birdHeight;
             this.draw();
         };
 
@@ -161,17 +167,17 @@ class slingShot {
 }
 const gifImages = [];
 class tnt {
-    constructor(imagePath, width, height, x) {
+    constructor(imagePath, x) {
         this.position = {
             x: x,
-            y: ground - height,
+            y: ground - tntHeight,
         };
 
         this.image = new Image();
         this.image.src = imagePath;
         this.image.onload = () => {
-            this.width = width;
-            this.height = height;
+            this.width = tntWidth;
+            this.height = tntHeight;
             this.draw();
         };
 
@@ -240,17 +246,17 @@ class tnt {
 }
 
 class pig {
-    constructor(imagePath, width, height, x, y) {
+    constructor(imagePath, x, y) {
         this.position = {
             x: x,
-            y: y - height,
+            y: y - pigHeight,
         };
 
         this.image = new Image();
         this.image.src = imagePath;
         this.image.onload = () => {
-            this.width = width;
-            this.height = height;
+            this.width = pigWidth;
+            this.height = pigHeight;
             this.draw();
         };
     }
@@ -505,26 +511,29 @@ function main() {
 // Initialization Of Game
 function init() {
 
-    // Generating Birds
-    const Bird1 = new Bird("images/birds/red.png", 60, 50, 300);
-    const Bird2 = new Bird("images/birds/red.png", 60, 50, 370);
-    const Bird3 = new Bird("images/birds/red.png", 60, 50, 440);
-    birds.push(Bird1, Bird2, Bird3);
-
-    // Generating Boxes
-    const tnt1 = new tnt("images/tnt.png", 100, 100, 1350);
-    const tnt2 = new tnt("images/tnt.png", 100, 100, 1250);
-    const tnt3 = new tnt("images/tnt.png", 100, 100, 1050);
-    tnts.push(tnt1, tnt2, tnt3);
-
-    // Generating Pigs
-    const pig1 = new pig("images/badpig.png", 80, 80, 1050, canvas.height - 120);
-    const pig2 = new pig("images/badpig.png", 80, 80, 1160, canvas.height - 20);
-    const pig3 = new pig("images/badpig.png", 80, 80, 1360, canvas.height - 120);
-    pigs.push(pig1, pig2, pig3);
+    fetch('config/levels.json')
+    .then(response => response.json())
+    .then(levels => {
+        const level1 = levels['1'];
+        level1.birds.forEach(birdConfig => {
+            birds.push(new Bird(birdConfig.image, birdConfig.positionX));
+        });
 
 
-    main();
+        level1.tnt.forEach(tntConfig => {
+            tnts.push(new tnt(tntConfig.image, tntConfig.positionX));
+        });
+
+        level1.pigs.forEach(pigConfig => {
+            pigs.push(new pig(pigConfig.image, pigConfig.positionX, ground -pigConfig.positionY));
+        });
+
+        main();
+    })
+    .catch(error => {
+        console.error('Error loading level configuration:', error);
+    });
+
 };
 
 // Pre-Init Code
